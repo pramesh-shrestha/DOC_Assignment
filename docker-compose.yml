@@ -3,31 +3,31 @@ services:
   db:
     image: "postgres:latest"
     restart: always
-    container_name: "postgresContainer"
+    container_name: "postgres-Container"
     ports:
       - "5432:5432"
     volumes:
-      - data:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=viadb
-      - POSTGRES_USER=user1
+      - POSTGRES_DB=tabloid_db
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
 
   backend:
-    image: "tabloid_backend:latest"
+    image: "backend-tabloid:latest"
     build:
       context: ./
-    container_name: "backend_container"
+    container_name: "backend-container"
     ports:
       - "8080:8080"
     depends_on:
       - db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/viadb
-      - SPRING_DATASOURCE_USERNAME=user1
-      - SPRING_DATASOURCE_PASSWORD=password
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - spring.datasource.url=jdbc:postgresql://db:5432/postgres
+      - spring.datasource.username=postgres
+      - spring.datasource.password=password
       - spring.jpa.hibernate.show-sql=true
+      - spring.jpa.hibernate.ddl-auto=update
 
 #  kubernetes-container:
 #    image: kubernete-image:latest
@@ -40,5 +40,5 @@ services:
 #      - "8080:8080"
 
 volumes:
-  data:
+  db:
     driver: local

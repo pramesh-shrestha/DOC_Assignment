@@ -17,9 +17,24 @@ spec:
     spec:
       containers:
         - name: k8s-tabloid
-          image: tabloid_backend:latest
+          image: backend-tabloid:latest
           imagePullPolicy: Never
           ports:
             - containerPort: 8080
       restartPolicy: Always
-      
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-tabloid
+spec:
+  selector:
+    app: k8s-tabloid
+  ports:
+    - protocol: TCP
+      port: 8080 #This is where service is running
+      targetPort: 8080 #the port exposed by the service
+  type: NodePort #type of service
