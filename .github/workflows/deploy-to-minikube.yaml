@@ -34,7 +34,7 @@ jobs:
         run: |
           echo "SERVICE_URL=$(minikube service k8s-tabloid --url)"
           kubectl port-forward service/k8s-tabloid 8080:8080 &> /dev/null &
-          sleep 5
+          sleep 10
           kubectl port-forward service/k8s-tabloid 8080:8080 &> /dev/null &
       - run: |
           curl -i http://localhost:8080/
