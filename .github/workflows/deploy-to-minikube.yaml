@@ -1,12 +1,12 @@
 name: CD - Deploy to Minikube using Github Actions
 on:
-#Trigger the workflow on push from the master/main branch or on pull request
+  #Trigger the workflow on push from the master/main branch or on pull request
   push:
     branches: [ master ] # main
   pull_request:
     branches: [ master ] # main
 jobs:
-# Build job
+  # Build job
   job1:
     name: Build and Deploy to Minikube
     # Run on Ubuntu using the latest version
@@ -36,8 +36,9 @@ jobs:
           kubectl port-forward service/k8s-tabloid 8080:8080 &> /dev/null &
           sleep 10
           kubectl port-forward service/k8s-tabloid 8080:8080 &> /dev/null &
-      - run: |
-          curl -i http://localhost:8080/
+      - name: Test the deployed service
+        run: |
+          curl -v http://localhost:8080/
       - name: Cleanup
         run: |
           eval $(minikube docker-env -u)
