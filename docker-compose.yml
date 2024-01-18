@@ -29,16 +29,6 @@ services:
       - spring.jpa.hibernate.show-sql=true
       - spring.jpa.hibernate.ddl-auto=update
 
-#  kubernetes-container:
-#    image: kubernete-image:latest
-#    build:
-#      context: ./
-#      dockerfile: Dockerfile
-#    volumes:
-#      - /data/kubernetes-app
-#    ports:
-#      - "8080:8080"
-
 volumes:
   db:
     driver: local
